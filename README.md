@@ -19,7 +19,7 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-client = Quip::QuipClient(access_token: '...')
+client = Quip::QuipClient.new(access_token: '...')
 user = client.get_authenticated_user()
 desktop = client.get_folder(user['desktop_folder_id'])
 puts "There are #{desktop['children'].length} items on the desktop"
