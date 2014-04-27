@@ -6,7 +6,7 @@ require 'quip/version'
 Gem::Specification.new do |spec|
   spec.name          = 'quip'
   spec.version       = Quip::VERSION
-  spec.authors       = ['jacqueline matuszak']
+  spec.authors       = ['Jacqueline Matuszak']
   spec.email         = ['j@jacamat.com']
   spec.summary       = %q(This is the unofficial Quip API Ruby client library.)
   spec.homepage      = 'https://github.com/jacamat/quip-ruby'
