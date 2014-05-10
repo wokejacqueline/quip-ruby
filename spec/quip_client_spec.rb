@@ -21,7 +21,7 @@ describe Quip::QuipClient do
     let(:client) { Quip::QuipClient.new(access_token: 'example') }
 
     specify '#get_authenticated_user' do
-      stub_request(:get, 'https://platform.quip.com/1/users/current')
+      stub_request(:get, client.base_url+'/users/current')
         .to_return(body: '{"name": "Joffrey Baratheon"}')
 
       user = client.get_authenticated_user()
@@ -29,7 +29,7 @@ describe Quip::QuipClient do
     end
 
     specify '#get_folder' do
-      stub_request(:get, 'https://platform.quip.com/1/folders/ZYbAOAbHPyR')
+      stub_request(:get, client.base_url+'/folders/ZYbAOAbHPyR')
         .to_return(body: '{"folder":{"title": "The true king of Westeros"}}')
 
       desktop = client.get_folder('ZYbAOAbHPyR')
@@ -37,7 +37,7 @@ describe Quip::QuipClient do
     end
 
     specify '#get_thread' do
-      stub_request(:get, 'https://platform.quip.com/1/threads/YeXAAA2Uwb3')
+      stub_request(:get, client.base_url+'/threads/YeXAAA2Uwb3')
         .to_return(body: '{"html": "<h1>Valor Morghulis</h1>"}')
 
       thread = client.get_thread('YeXAAA2Uwb3')
@@ -45,7 +45,7 @@ describe Quip::QuipClient do
     end
 
     specify '#get_messages' do
-      stub_request(:get, 'https://platform.quip.com/1/messages/OLJAAAo0ggF')
+      stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
         .to_return(body: '[{"text":"I am the king! I will punish you."}]')
 
       messages = client.get_messages('OLJAAAo0ggF')

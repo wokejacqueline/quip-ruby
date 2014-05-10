@@ -9,7 +9,7 @@ module Quip
       @access_token = options.fetch(:access_token)
       @client_id = options.fetch(:client_id, nil)
       @client_secret = options.fetch(:client_secret, nil)
-      @base_url = options.fetch(:base_url, 'https://platform.quip.com')
+      @base_url = options.fetch(:base_url, 'https://platform.quip.com/1')
       @request_timeout = options.fetch(:request_timeout, 10)
     end
 
@@ -32,9 +32,18 @@ module Quip
     private
 
     def get_json(path)
-      response = Unirest.get("#{base_url}/1/#{path}", headers: {
+      response = Unirest.get("#{base_url}/#{path}", headers: {
         'Authorization' => "Bearer #{access_token}"
       })
+
+      response.body
+    end
+
+    def post_json(path, data)
+      response = Unirest.post("#{base_url}/#{path}", headers: {
+        'Authorization' => "Bearer #{access_token}" }, 
+        parameters: data
+      )
 
       response.body
     end
