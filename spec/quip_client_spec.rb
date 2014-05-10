@@ -43,5 +43,13 @@ describe Quip::QuipClient do
       thread = client.get_thread('YeXAAA2Uwb3')
       expect(thread['html']).to eq('<h1>Valor Morghulis</h1>')
     end
+
+    specify '#get_messages' do
+      stub_request(:get, 'https://platform.quip.com/1/messages/OLJAAAo0ggF')
+        .to_return(body: '[{"text":"I am the king! I will punish you."}]')
+
+      messages = client.get_messages('OLJAAAo0ggF')
+      expect(messages[0]['text']).to eq("I am the king! I will punish you.")
+    end
   end
 end
