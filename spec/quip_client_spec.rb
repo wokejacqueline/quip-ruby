@@ -30,7 +30,7 @@ describe Quip::QuipClient do
 
     specify '#get_folder' do
       stub_request(:get, client.base_url+'/folders/ZYbAOAbHPyR')
-        .to_return(body: '{"folder":{"title": "The true king of Westeros"}}')
+        .to_return(body: '{"folder": {"title": "The true king of Westeros"}}')
 
       desktop = client.get_folder('ZYbAOAbHPyR')
       expect(desktop['folder']['title']).to eq('The true king of Westeros')
@@ -46,10 +46,18 @@ describe Quip::QuipClient do
 
     specify '#get_messages' do
       stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
-        .to_return(body: '[{"text":"I am the king! I will punish you."}]')
+        .to_return(body: '[{"text": "I am the king! I will punish you."}]')
 
       messages = client.get_messages('OLJAAAo0ggF')
       expect(messages[0]['text']).to eq("I am the king! I will punish you.")
+    end
+
+    specify '#post_message' do
+      stub_request(:post, client.base_url+'/messages/new')
+        .to_return(body: '{"text": "The king can do as he likes!"}')
+
+      message = client.post_message('YTWAAAiKUqp', "The king can do as he likes!")
+      expect(message['text']).to eq("The king can do as he likes!")
     end
   end
 end

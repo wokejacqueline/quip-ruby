@@ -29,6 +29,10 @@ module Quip
       get_json("messages/#{thread_id}")
     end
 
+    def post_message(thread_id, message)
+      post_json("messages/new", {thread_id: thread_id, content: message})
+    end
+
     private
 
     def get_json(path)
