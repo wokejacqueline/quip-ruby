@@ -66,6 +66,10 @@ module Quip
       })
     end
 
+    def get_blob(thread_id, blob_id)
+      get_json("blob/#{thread_id}/#{blob_id}")
+    end
+
     def get_messages(thread_id)
       get_json("messages/#{thread_id}")
     end

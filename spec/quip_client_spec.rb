@@ -109,6 +109,14 @@ describe Quip::QuipClient do
       expect(members['user_ids']).to eq([])
     end
 
+    specify '#get_blob' do
+      stub_request(:get, client.base_url+'/blob/JZbAAAb9x5x/BmUYIlBwV3_Yil')
+        .to_return(body: '\x88\xE8\xFF\xD3T\x88\x00\x00\x00')
+
+      blob = client.get_blob('JZbAAAb9x5x', 'BmUYIlBwV3_Yil')
+      expect(blob).to eq('\x88\xE8\xFF\xD3T\x88\x00\x00\x00')
+    end
+
     specify '#get_messages' do
       stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
         .to_return(body: '[{"text": "I am the king! I will punish you."}]')
