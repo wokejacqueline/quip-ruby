@@ -101,6 +101,14 @@ describe Quip::QuipClient do
       expect(members['user_ids']).to eq(["C3Rc3iR0b0"])
     end
 
+    specify '#remove_thread_members' do
+      stub_request(:post, client.base_url+'/threads/remove-members')
+        .to_return(body: '{"user_ids": []}')
+
+      members = client.remove_thread_members("JZbAAAb9x5x", ["C3Rc3iR0b0"])
+      expect(members['user_ids']).to eq([])
+    end
+
     specify '#get_messages' do
       stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
         .to_return(body: '[{"text": "I am the king! I will punish you."}]')
