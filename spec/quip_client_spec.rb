@@ -57,6 +57,22 @@ describe Quip::QuipClient do
       expect(threads['YTWAAAiKUqp']['html']).to eq('<h1>Valar Dohaeris</h1>')
     end
 
+    specify '#get_recent_threads' do
+      stub_request(:get, client.base_url+'/threads/recent')
+        .with(query: {
+          "count" => 2,
+          "max_updated_usec" => 1399749767280351
+        })
+        .to_return(body: '{
+          "JLEAAAn9lAQ": {"html": "<h1>Kingslayer</h1>"}, 
+          "DWRAOA5qGV9": {"thread": {"updated_usec": 1399749767280349}}
+        }')
+
+      recent = client.get_recent_threads(2, 1399749767280351)
+      expect(recent.length).to eq(2)
+      expect(recent['DWRAOA5qGV9']['thread']['updated_usec']).to be < 1399749767280351
+    end
+
     specify '#get_messages' do
       stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
         .to_return(body: '[{"text": "I am the king! I will punish you."}]')

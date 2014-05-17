@@ -29,6 +29,10 @@ module Quip
       get_json("threads/?ids=#{thread_ids.join(',')}")
     end
 
+    def get_recent_threads(count = 10, max_usec = nil)
+      get_json("threads/recent?count=#{count}&max_updated_usec=#{max_usec}")
+    end
+
     def get_messages(thread_id)
       get_json("messages/#{thread_id}")
     end
