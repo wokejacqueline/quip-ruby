@@ -81,6 +81,18 @@ describe Quip::QuipClient do
       expect(document['html']).to eq("<h1>House Lannister</h1>")
     end
 
+    specify '#edit_document' do
+      stub_request(:post, client.base_url+'/threads/edit-document')
+        .to_return(body: '{
+          "html": "<h1>House Stark</h1>",
+          "thread": {"id": "IXbAAA6qefF"}
+        }')
+
+      document = client.edit_document("IXbAAA6qefF", "<h1>House Stark</h1>")
+      expect(document['html']).to eq("<h1>House Stark</h1>")
+      expect(document['thread']['id']).to eq("IXbAAA6qefF")
+    end
+
     specify '#get_messages' do
       stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
         .to_return(body: '[{"text": "I am the king! I will punish you."}]')

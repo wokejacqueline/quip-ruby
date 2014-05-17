@@ -42,6 +42,16 @@ module Quip
       })
     end
 
+    def edit_document(thread_id, content = nil, options = {})
+      post_json("threads/edit-document", {
+        thread_id: thread_id,
+        content: content,
+        location: options.fetch(:location, 0),
+        section_id: options.fetch(:section_id, nil),
+        format: options.fetch(:format, 'html')
+      })
+    end
+
     def get_messages(thread_id)
       get_json("messages/#{thread_id}")
     end
