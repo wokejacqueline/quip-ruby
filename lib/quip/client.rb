@@ -33,6 +33,15 @@ module Quip
       get_json("threads/recent?count=#{count}&max_updated_usec=#{max_usec}")
     end
 
+    def create_document(content, options = {})
+      post_json("threads/new-document", {
+        content: content,
+        format: options.fetch(:format, 'html'),
+        title: options.fetch(:title, nil),
+        member_ids: options.fetch(:member_ids, []).join(',')
+      })
+    end
+
     def get_messages(thread_id)
       get_json("messages/#{thread_id}")
     end

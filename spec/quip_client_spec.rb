@@ -73,6 +73,14 @@ describe Quip::QuipClient do
       expect(recent['DWRAOA5qGV9']['thread']['updated_usec']).to be < 1399749767280351
     end
 
+    specify '#create_document' do
+      stub_request(:post, client.base_url+'/threads/new-document')
+        .to_return(body: '{"html": "<h1>House Lannister</h1>"}')
+
+      document = client.create_document("<h1>House Lannister</h1>")
+      expect(document['html']).to eq("<h1>House Lannister</h1>")
+    end
+
     specify '#get_messages' do
       stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
         .to_return(body: '[{"text": "I am the king! I will punish you."}]')
