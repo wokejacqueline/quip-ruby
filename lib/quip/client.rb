@@ -25,6 +25,10 @@ module Quip
       get_json("threads/#{thread_id}")
     end
 
+    def get_threads(thread_ids)
+      get_json("threads/?ids=#{thread_ids.join(',')}")
+    end
+
     def get_messages(thread_id)
       get_json("messages/#{thread_id}")
     end

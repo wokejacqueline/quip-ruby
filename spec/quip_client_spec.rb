@@ -44,6 +44,19 @@ describe Quip::QuipClient do
       expect(thread['html']).to eq('<h1>Valor Morghulis</h1>')
     end
 
+    specify '#get_threads' do
+      stub_request(:get, client.base_url+'/threads/')
+        .with(query: {"ids" => "CQXAAAP8MkR,YTWAAAiKUqp" })
+        .to_return(body: '{
+          "CQXAAAP8MkR": {"html": "<h1>Valar Morghulis</h1>"}, 
+          "YTWAAAiKUqp": {"html": "<h1>Valar Dohaeris</h1>"}
+        }')
+
+      threads = client.get_threads(['CQXAAAP8MkR','YTWAAAiKUqp'])
+      expect(threads['CQXAAAP8MkR']['html']).to eq('<h1>Valar Morghulis</h1>')
+      expect(threads['YTWAAAiKUqp']['html']).to eq('<h1>Valar Dohaeris</h1>')
+    end
+
     specify '#get_messages' do
       stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
         .to_return(body: '[{"text": "I am the king! I will punish you."}]')
