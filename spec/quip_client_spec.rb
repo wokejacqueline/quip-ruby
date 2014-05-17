@@ -93,6 +93,14 @@ describe Quip::QuipClient do
       expect(document['thread']['id']).to eq("IXbAAA6qefF")
     end
 
+    specify '#add_thread_members' do
+      stub_request(:post, client.base_url+'/threads/add-members')
+        .to_return(body: '{"user_ids": ["C3Rc3iR0b0"]}')
+
+      members = client.add_thread_members("HTPAAAdSbAm", ["C3Rc3iR0b0"])
+      expect(members['user_ids']).to eq(["C3Rc3iR0b0"])
+    end
+
     specify '#get_messages' do
       stub_request(:get, client.base_url+'/messages/OLJAAAo0ggF')
         .to_return(body: '[{"text": "I am the king! I will punish you."}]')

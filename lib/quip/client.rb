@@ -52,6 +52,13 @@ module Quip
       })
     end
 
+    def add_thread_members(thread_id, member_ids)
+      post_json("threads/add-members", {
+        thread_id: thread_id,
+        member_ids: member_ids.join(',')
+      })
+    end
+
     def get_messages(thread_id)
       get_json("messages/#{thread_id}")
     end
