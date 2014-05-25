@@ -25,6 +25,51 @@ module Quip
       get_json("threads/#{thread_id}")
     end
 
+    def get_threads(thread_ids)
+      get_json("threads/?ids=#{thread_ids.join(',')}")
+    end
+
+    def get_recent_threads(count = 10, max_usec = nil)
+      get_json("threads/recent?count=#{count}&max_updated_usec=#{max_usec}")
+    end
+
+    def create_document(content, options = {})
+      post_json("threads/new-document", {
+        content: content,
+        format: options.fetch(:format, 'html'),
+        title: options.fetch(:title, nil),
+        member_ids: options.fetch(:member_ids, []).join(',')
+      })
+    end
+
+    def edit_document(thread_id, content = nil, options = {})
+      post_json("threads/edit-document", {
+        thread_id: thread_id,
+        content: content,
+        location: options.fetch(:location, 0),
+        section_id: options.fetch(:section_id, nil),
+        format: options.fetch(:format, 'html')
+      })
+    end
+
+    def add_thread_members(thread_id, member_ids)
+      post_json("threads/add-members", {
+        thread_id: thread_id,
+        member_ids: member_ids.join(',')
+      })
+    end
+
+    def remove_thread_members(thread_id, member_ids)
+      post_json("threads/remove-members", {
+        thread_id: thread_id,
+        member_ids: member_ids.join(',')
+      })
+    end
+
+    def get_blob(thread_id, blob_id)
+      get_json("blob/#{thread_id}/#{blob_id}")
+    end
+
     def get_messages(thread_id)
       get_json("messages/#{thread_id}")
     end
