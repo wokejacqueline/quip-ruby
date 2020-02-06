@@ -1,6 +1,6 @@
 # Quip API Ruby Client
 
-This is the unofficial Quip API Ruby client library.
+This is the unofficial Quip API Ruby client library, a personal project that is no longer maintained.
 
 ## Installation
 
